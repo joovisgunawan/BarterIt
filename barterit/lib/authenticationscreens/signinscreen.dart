@@ -286,7 +286,7 @@ class _SignUpScreenState extends State<SignInScreen> {
 
     if (!value) {
       await preference.setString('email', '');
-      await preference.setString('pass', '');
+      await preference.setString('password', '');
       await preference.setBool('checkbox', false);
       _email.text = '';
       _password.text = '';
@@ -308,7 +308,7 @@ class _SignUpScreenState extends State<SignInScreen> {
         return;
       }
       await preference.setString('email', email);
-      await preference.setString('pass', password);
+      await preference.setString('password', password);
       await preference.setBool("checkbox", true);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
