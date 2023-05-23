@@ -248,7 +248,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     String password = _password.text;
 
     http.post(
-      Uri.parse("${PhpConfig().SERVER}/barterlt/php/signup.php"),
+      Uri.parse("${PhpConfig().SERVER}/barterltphp/php/signup.php"),
       body: {
         "user_name": name,
         "user_email": email,
