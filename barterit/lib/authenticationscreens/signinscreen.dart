@@ -132,8 +132,10 @@ class _SignUpScreenState extends State<SignInScreen> {
                               Checkbox(
                                 value: isChecked,
                                 onChanged: (bool? value) {
-                                  savepreference(value!);
-                                  isChecked = value;
+                                  isChecked = value!;
+                                  print(isChecked);
+                                  savePreference(value);
+
                                   setState(() {});
                                 },
                               ),
@@ -240,7 +242,7 @@ class _SignUpScreenState extends State<SignInScreen> {
     String email = _email.text;
     String password = _password.text;
     http.post(
-      Uri.parse("${PhpConfig().SERVER}/barterlt/php/signin.php"),
+      Uri.parse("${PhpConfig().SERVER}/barterltphp/php/signin.php"),
       body: {
         "user_email": email,
         "user_password": password,
@@ -276,7 +278,7 @@ class _SignUpScreenState extends State<SignInScreen> {
     );
   }
 
-  void savepreference(bool value) async {
+  void savePreference(bool value) async {
     FocusScope.of(context).requestFocus(FocusNode());
     String email = _email.text;
     String password = _password.text;
@@ -290,16 +292,24 @@ class _SignUpScreenState extends State<SignInScreen> {
       _password.text = '';
       isChecked = false;
       setState(() {});
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("Preference Removed")));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Preference Removed"),
+        ),
+      );
     } else {
       if (!_formKey.currentState!.validate()) {
         isChecked = false;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Please fill data first"),
+          ),
+        );
         return;
       }
       await preference.setString('email', email);
       await preference.setString('pass', password);
-      await preference.setBool("checkbox", value);
+      await preference.setBool("checkbox", true);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Preference Stored"),
